@@ -1,5 +1,6 @@
 var express = require('express');
-var router = express.Router;
+var router = express.Router();
+var passport = require('passport');
 
 // base url: '/auth'
 router.get('/', function(req, res) {
@@ -7,5 +8,14 @@ router.get('/', function(req, res) {
 		title: 'Login'
 	});
 });
+
+router.get(
+	'/facebook',
+	passport.authenticate(
+		'facebook', {
+			scope: 'email'
+		}
+	)
+);
 
 module.exports = router;
