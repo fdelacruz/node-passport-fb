@@ -29,8 +29,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(passport.initialize());
+// Initialize express session
 app.use(session({ secret: 'secret'}));
+
+// Initialize passport
+app.use(passport.initialize());
+
+// Hook passport into the session
 app.use(passport.session());
 
 app.use('/auth', authentication);
