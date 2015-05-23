@@ -24,11 +24,17 @@ router.get(
 		'facebook', {
 			failureRedirect: '/auth'
 		}
-	), function(req, res) {
+	),
+	function(req, res) {
 		// if user has been authenticated, this route handler
 		// will fire.
 		res.redirect('/');
 	}
 );
+
+router.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/auth');
+});
 
 module.exports = router;
