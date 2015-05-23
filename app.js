@@ -30,7 +30,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize express session
-app.use(session({ secret: 'secret'}));
+app.use(session({ 
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 // Initialize passport
 app.use(passport.initialize());
