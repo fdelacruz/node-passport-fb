@@ -18,4 +18,17 @@ router.get(
 	)
 );
 
+router.get(
+	'/facebook/callback',
+	passport.authenticate(
+		'facebook', {
+			failureRedirect: '/auth'
+		}
+	), function(req, res) {
+		// if user has been authenticated, this route handler
+		// will fire.
+		res.redirect('/');
+	}
+);
+
 module.exports = router;
