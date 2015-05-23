@@ -5,12 +5,25 @@ var User = require('../models/user');
 // load config/auth.js (credentials, NOT commited)
 var configAuth = require('./auth');
 
+// Session serialization
+passport.serializeUser(function(user, next) {
+	next(null, user._id);
+});
+passport.deserializeUser(function(userId, next) {
+	User.findById(userId, function(err, user) {
+		next(err, user);
+	});
+});
+
+// Strategies
 var fbStrategy = new FacebookStrategy({
 	clientID 		: configAuth.facebookAuth.clientID,
 	clientSecret 	: configAuth.facebookAuth.clientSecret,
 	callbackURL 	: configAuth.facebookAuth.callbackURL
 }, function(accessToken, refreshToken, profile, next) {
-	User.findOne({fbId: profile.id}, function(err, user) {
+	User.findOne({
+		fbId: profile.id
+	}, function(err, user) {
 		if (user) {
 			next(null, user);
 		} else {
@@ -27,7 +40,7 @@ var fbStrategy = new FacebookStrategy({
 				next(null, user);
 			});
 		}
-	});	
+	});
 });
 
 passport.use(fbStrategy);

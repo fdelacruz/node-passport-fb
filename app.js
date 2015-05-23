@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 app.use(session({ secret: 'secret'}));
+app.use(passport.session());
 
 app.use('/auth', authentication);
 app.use('/', routes);
